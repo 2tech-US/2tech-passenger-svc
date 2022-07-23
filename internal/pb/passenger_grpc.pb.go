@@ -18,10 +18,10 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// AuthServiceClient is the client API for AuthService service.
+// PassengerServiceClient is the client API for PassengerService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AuthServiceClient interface {
+type PassengerServiceClient interface {
 	CreatePassenger(ctx context.Context, in *CreatePassengerRequest, opts ...grpc.CallOption) (*CreatePassengerResponse, error)
 	GetPassengerByPhone(ctx context.Context, in *GetPassengerByPhoneRequest, opts ...grpc.CallOption) (*GetPassengerByPhoneResponse, error)
 	ListPassengers(ctx context.Context, in *ListPassengersRequest, opts ...grpc.CallOption) (*ListPassengersResponse, error)
@@ -31,81 +31,81 @@ type AuthServiceClient interface {
 	DeletePassenger(ctx context.Context, in *DeletePassengerRequest, opts ...grpc.CallOption) (*DeletePassengerResponse, error)
 }
 
-type authServiceClient struct {
+type passengerServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAuthServiceClient(cc grpc.ClientConnInterface) AuthServiceClient {
-	return &authServiceClient{cc}
+func NewPassengerServiceClient(cc grpc.ClientConnInterface) PassengerServiceClient {
+	return &passengerServiceClient{cc}
 }
 
-func (c *authServiceClient) CreatePassenger(ctx context.Context, in *CreatePassengerRequest, opts ...grpc.CallOption) (*CreatePassengerResponse, error) {
+func (c *passengerServiceClient) CreatePassenger(ctx context.Context, in *CreatePassengerRequest, opts ...grpc.CallOption) (*CreatePassengerResponse, error) {
 	out := new(CreatePassengerResponse)
-	err := c.cc.Invoke(ctx, "/auth.AuthService/CreatePassenger", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/CreatePassenger", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authServiceClient) GetPassengerByPhone(ctx context.Context, in *GetPassengerByPhoneRequest, opts ...grpc.CallOption) (*GetPassengerByPhoneResponse, error) {
+func (c *passengerServiceClient) GetPassengerByPhone(ctx context.Context, in *GetPassengerByPhoneRequest, opts ...grpc.CallOption) (*GetPassengerByPhoneResponse, error) {
 	out := new(GetPassengerByPhoneResponse)
-	err := c.cc.Invoke(ctx, "/auth.AuthService/GetPassengerByPhone", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/GetPassengerByPhone", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authServiceClient) ListPassengers(ctx context.Context, in *ListPassengersRequest, opts ...grpc.CallOption) (*ListPassengersResponse, error) {
+func (c *passengerServiceClient) ListPassengers(ctx context.Context, in *ListPassengersRequest, opts ...grpc.CallOption) (*ListPassengersResponse, error) {
 	out := new(ListPassengersResponse)
-	err := c.cc.Invoke(ctx, "/auth.AuthService/ListPassengers", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/ListPassengers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authServiceClient) UpdatePassenger(ctx context.Context, in *UpdatePassengerRequest, opts ...grpc.CallOption) (*UpdatePassengerResponse, error) {
+func (c *passengerServiceClient) UpdatePassenger(ctx context.Context, in *UpdatePassengerRequest, opts ...grpc.CallOption) (*UpdatePassengerResponse, error) {
 	out := new(UpdatePassengerResponse)
-	err := c.cc.Invoke(ctx, "/auth.AuthService/UpdatePassenger", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/UpdatePassenger", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authServiceClient) UpdatePassword(ctx context.Context, in *UpdatePasswordRequest, opts ...grpc.CallOption) (*UpdatePasswordResponse, error) {
+func (c *passengerServiceClient) UpdatePassword(ctx context.Context, in *UpdatePasswordRequest, opts ...grpc.CallOption) (*UpdatePasswordResponse, error) {
 	out := new(UpdatePasswordResponse)
-	err := c.cc.Invoke(ctx, "/auth.AuthService/UpdatePassword", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/UpdatePassword", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authServiceClient) VerifyPassenger(ctx context.Context, in *VerifyPassengerRequest, opts ...grpc.CallOption) (*VerifyPassengerResponse, error) {
+func (c *passengerServiceClient) VerifyPassenger(ctx context.Context, in *VerifyPassengerRequest, opts ...grpc.CallOption) (*VerifyPassengerResponse, error) {
 	out := new(VerifyPassengerResponse)
-	err := c.cc.Invoke(ctx, "/auth.AuthService/VerifyPassenger", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/VerifyPassenger", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authServiceClient) DeletePassenger(ctx context.Context, in *DeletePassengerRequest, opts ...grpc.CallOption) (*DeletePassengerResponse, error) {
+func (c *passengerServiceClient) DeletePassenger(ctx context.Context, in *DeletePassengerRequest, opts ...grpc.CallOption) (*DeletePassengerResponse, error) {
 	out := new(DeletePassengerResponse)
-	err := c.cc.Invoke(ctx, "/auth.AuthService/DeletePassenger", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/DeletePassenger", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AuthServiceServer is the server API for AuthService service.
-// All implementations must embed UnimplementedAuthServiceServer
+// PassengerServiceServer is the server API for PassengerService service.
+// All implementations must embed UnimplementedPassengerServiceServer
 // for forward compatibility
-type AuthServiceServer interface {
+type PassengerServiceServer interface {
 	CreatePassenger(context.Context, *CreatePassengerRequest) (*CreatePassengerResponse, error)
 	GetPassengerByPhone(context.Context, *GetPassengerByPhoneRequest) (*GetPassengerByPhoneResponse, error)
 	ListPassengers(context.Context, *ListPassengersRequest) (*ListPassengersResponse, error)
@@ -113,207 +113,207 @@ type AuthServiceServer interface {
 	UpdatePassword(context.Context, *UpdatePasswordRequest) (*UpdatePasswordResponse, error)
 	VerifyPassenger(context.Context, *VerifyPassengerRequest) (*VerifyPassengerResponse, error)
 	DeletePassenger(context.Context, *DeletePassengerRequest) (*DeletePassengerResponse, error)
-	mustEmbedUnimplementedAuthServiceServer()
+	mustEmbedUnimplementedPassengerServiceServer()
 }
 
-// UnimplementedAuthServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedAuthServiceServer struct {
+// UnimplementedPassengerServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedPassengerServiceServer struct {
 }
 
-func (UnimplementedAuthServiceServer) CreatePassenger(context.Context, *CreatePassengerRequest) (*CreatePassengerResponse, error) {
+func (UnimplementedPassengerServiceServer) CreatePassenger(context.Context, *CreatePassengerRequest) (*CreatePassengerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePassenger not implemented")
 }
-func (UnimplementedAuthServiceServer) GetPassengerByPhone(context.Context, *GetPassengerByPhoneRequest) (*GetPassengerByPhoneResponse, error) {
+func (UnimplementedPassengerServiceServer) GetPassengerByPhone(context.Context, *GetPassengerByPhoneRequest) (*GetPassengerByPhoneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPassengerByPhone not implemented")
 }
-func (UnimplementedAuthServiceServer) ListPassengers(context.Context, *ListPassengersRequest) (*ListPassengersResponse, error) {
+func (UnimplementedPassengerServiceServer) ListPassengers(context.Context, *ListPassengersRequest) (*ListPassengersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPassengers not implemented")
 }
-func (UnimplementedAuthServiceServer) UpdatePassenger(context.Context, *UpdatePassengerRequest) (*UpdatePassengerResponse, error) {
+func (UnimplementedPassengerServiceServer) UpdatePassenger(context.Context, *UpdatePassengerRequest) (*UpdatePassengerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePassenger not implemented")
 }
-func (UnimplementedAuthServiceServer) UpdatePassword(context.Context, *UpdatePasswordRequest) (*UpdatePasswordResponse, error) {
+func (UnimplementedPassengerServiceServer) UpdatePassword(context.Context, *UpdatePasswordRequest) (*UpdatePasswordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePassword not implemented")
 }
-func (UnimplementedAuthServiceServer) VerifyPassenger(context.Context, *VerifyPassengerRequest) (*VerifyPassengerResponse, error) {
+func (UnimplementedPassengerServiceServer) VerifyPassenger(context.Context, *VerifyPassengerRequest) (*VerifyPassengerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyPassenger not implemented")
 }
-func (UnimplementedAuthServiceServer) DeletePassenger(context.Context, *DeletePassengerRequest) (*DeletePassengerResponse, error) {
+func (UnimplementedPassengerServiceServer) DeletePassenger(context.Context, *DeletePassengerRequest) (*DeletePassengerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePassenger not implemented")
 }
-func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
+func (UnimplementedPassengerServiceServer) mustEmbedUnimplementedPassengerServiceServer() {}
 
-// UnsafeAuthServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AuthServiceServer will
+// UnsafePassengerServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PassengerServiceServer will
 // result in compilation errors.
-type UnsafeAuthServiceServer interface {
-	mustEmbedUnimplementedAuthServiceServer()
+type UnsafePassengerServiceServer interface {
+	mustEmbedUnimplementedPassengerServiceServer()
 }
 
-func RegisterAuthServiceServer(s grpc.ServiceRegistrar, srv AuthServiceServer) {
-	s.RegisterService(&AuthService_ServiceDesc, srv)
+func RegisterPassengerServiceServer(s grpc.ServiceRegistrar, srv PassengerServiceServer) {
+	s.RegisterService(&PassengerService_ServiceDesc, srv)
 }
 
-func _AuthService_CreatePassenger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PassengerService_CreatePassenger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreatePassengerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).CreatePassenger(ctx, in)
+		return srv.(PassengerServiceServer).CreatePassenger(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.AuthService/CreatePassenger",
+		FullMethod: "/passenger.PassengerService/CreatePassenger",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).CreatePassenger(ctx, req.(*CreatePassengerRequest))
+		return srv.(PassengerServiceServer).CreatePassenger(ctx, req.(*CreatePassengerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_GetPassengerByPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PassengerService_GetPassengerByPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetPassengerByPhoneRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).GetPassengerByPhone(ctx, in)
+		return srv.(PassengerServiceServer).GetPassengerByPhone(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.AuthService/GetPassengerByPhone",
+		FullMethod: "/passenger.PassengerService/GetPassengerByPhone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).GetPassengerByPhone(ctx, req.(*GetPassengerByPhoneRequest))
+		return srv.(PassengerServiceServer).GetPassengerByPhone(ctx, req.(*GetPassengerByPhoneRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_ListPassengers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PassengerService_ListPassengers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListPassengersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).ListPassengers(ctx, in)
+		return srv.(PassengerServiceServer).ListPassengers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.AuthService/ListPassengers",
+		FullMethod: "/passenger.PassengerService/ListPassengers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).ListPassengers(ctx, req.(*ListPassengersRequest))
+		return srv.(PassengerServiceServer).ListPassengers(ctx, req.(*ListPassengersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_UpdatePassenger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PassengerService_UpdatePassenger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdatePassengerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).UpdatePassenger(ctx, in)
+		return srv.(PassengerServiceServer).UpdatePassenger(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.AuthService/UpdatePassenger",
+		FullMethod: "/passenger.PassengerService/UpdatePassenger",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).UpdatePassenger(ctx, req.(*UpdatePassengerRequest))
+		return srv.(PassengerServiceServer).UpdatePassenger(ctx, req.(*UpdatePassengerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_UpdatePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PassengerService_UpdatePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdatePasswordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).UpdatePassword(ctx, in)
+		return srv.(PassengerServiceServer).UpdatePassword(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.AuthService/UpdatePassword",
+		FullMethod: "/passenger.PassengerService/UpdatePassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).UpdatePassword(ctx, req.(*UpdatePasswordRequest))
+		return srv.(PassengerServiceServer).UpdatePassword(ctx, req.(*UpdatePasswordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_VerifyPassenger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PassengerService_VerifyPassenger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(VerifyPassengerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).VerifyPassenger(ctx, in)
+		return srv.(PassengerServiceServer).VerifyPassenger(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.AuthService/VerifyPassenger",
+		FullMethod: "/passenger.PassengerService/VerifyPassenger",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).VerifyPassenger(ctx, req.(*VerifyPassengerRequest))
+		return srv.(PassengerServiceServer).VerifyPassenger(ctx, req.(*VerifyPassengerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_DeletePassenger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PassengerService_DeletePassenger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeletePassengerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).DeletePassenger(ctx, in)
+		return srv.(PassengerServiceServer).DeletePassenger(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.AuthService/DeletePassenger",
+		FullMethod: "/passenger.PassengerService/DeletePassenger",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).DeletePassenger(ctx, req.(*DeletePassengerRequest))
+		return srv.(PassengerServiceServer).DeletePassenger(ctx, req.(*DeletePassengerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
+// PassengerService_ServiceDesc is the grpc.ServiceDesc for PassengerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AuthService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "auth.AuthService",
-	HandlerType: (*AuthServiceServer)(nil),
+var PassengerService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "passenger.PassengerService",
+	HandlerType: (*PassengerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreatePassenger",
-			Handler:    _AuthService_CreatePassenger_Handler,
+			Handler:    _PassengerService_CreatePassenger_Handler,
 		},
 		{
 			MethodName: "GetPassengerByPhone",
-			Handler:    _AuthService_GetPassengerByPhone_Handler,
+			Handler:    _PassengerService_GetPassengerByPhone_Handler,
 		},
 		{
 			MethodName: "ListPassengers",
-			Handler:    _AuthService_ListPassengers_Handler,
+			Handler:    _PassengerService_ListPassengers_Handler,
 		},
 		{
 			MethodName: "UpdatePassenger",
-			Handler:    _AuthService_UpdatePassenger_Handler,
+			Handler:    _PassengerService_UpdatePassenger_Handler,
 		},
 		{
 			MethodName: "UpdatePassword",
-			Handler:    _AuthService_UpdatePassword_Handler,
+			Handler:    _PassengerService_UpdatePassword_Handler,
 		},
 		{
 			MethodName: "VerifyPassenger",
-			Handler:    _AuthService_VerifyPassenger_Handler,
+			Handler:    _PassengerService_VerifyPassenger_Handler,
 		},
 		{
 			MethodName: "DeletePassenger",
-			Handler:    _AuthService_DeletePassenger_Handler,
+			Handler:    _PassengerService_DeletePassenger_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

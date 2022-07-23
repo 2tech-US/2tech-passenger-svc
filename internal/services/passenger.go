@@ -13,7 +13,7 @@ import (
 
 type Server struct {
 	DB *db.Queries
-	pb.UnimplementedAuthServiceServer
+	pb.UnimplementedPassengerServiceServer
 }
 
 func (s *Server) CreatePassenger(context context.Context, req *pb.CreatePassengerRequest) (*pb.CreatePassengerResponse, error) {
