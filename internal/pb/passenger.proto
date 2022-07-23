@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "./pkg/pb";
+
+service AuthService {
+  rpc CreatePassenger(CreatePassengerRequest) returns (CreatePassengerResponse) {}
+  rpc GetPassengerByPhone(GetPassengerByPhoneRequest) returns (GetPassengerByPhoneResponse) {}
+  rpc ListPassengers(ListPassengersRequest) returns (ListPassengersResponse) {}
+  rpc UpdatePassenger(UpdatePassengerRequest) returns (UpdatePassengerResponse) {}
+  rpc UpdatePassword(UpdatePasswordRequest) returns (UpdatePasswordResponse) {}
+  rpc VerifyPassenger(VerifyPassengerRequest) returns (VerifyPassengerResponse) {}
+  rpc DeletePassenger(DeletePassengerRequest) returns (DeletePassengerResponse) {}
+
+}
+
+message Passenger {
+  int64 id = 1;
+  string phone = 2;
+  string name = 3;
+  bool verified = 4;
+  string dateOfBirth = 5;
+}
+
+message CreatePassengerRequest {
+  string phone = 1;
+  string password = 2;
+  string name = 3;
+  string dateOfBirth = 4;
+}
+
+message CreatePassengerResponse {
+  int64 status = 1;
+  string error = 2;
+  Passenger data = 3;
+}
+
+message GetPassengerByPhoneRequest {
+  string phone = 1;
+}
+
+message GetPassengerByPhoneResponse {
+  int64 status = 1;
+  string error = 2;
+  Passenger data = 3;
+}
+
+message ListPassengersRequest {
+  int32 offset = 1;
+  int32 limit = 2;
+}
+
+message ListPassengersResponse {
+  int64 status = 1;
+  string error = 2;
+  int64 total = 3;
+  int64 offset = 4;
+  int64 limit = 5;
+  repeated Passenger data = 6;
+}
+
+message UpdatePassengerRequest {
+  int64 id = 1;
+  string phone = 2;
+  string name = 3;
+  string dateOfBirth = 4;
+}
+
+message UpdatePassengerResponse {
+  int64 status = 1;
+  string error = 2;
+  Passenger data = 3;
+}
+
+message UpdatePasswordRequest {
+  string phone = 1;
+  string password = 2;
+}
+
+message UpdatePasswordResponse {
+  int64 status = 1;
+  string error = 2;
+  Passenger data = 3;
+}
+
+message VerifyPassengerRequest {
+  string phone = 1;
+}
+
+message VerifyPassengerResponse {
+  int64 status = 1;
+  string error = 2;
+  Passenger data = 3;
+}
+
+message DeletePassengerRequest {
+  string phone = 1;
+}
+
+message DeletePassengerResponse {
+  int64 status = 1;
+  string error = 2;
+}
