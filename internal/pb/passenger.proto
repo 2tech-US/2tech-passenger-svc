@@ -33,7 +33,7 @@ message CreatePassengerRequest {
 message CreatePassengerResponse {
   int64 status = 1;
   string error = 2;
-  Passenger data = 3;
+  Passenger passenger = 3;
 }
 
 message GetPassengerByPhoneRequest {
@@ -43,7 +43,7 @@ message GetPassengerByPhoneRequest {
 message GetPassengerByPhoneResponse {
   int64 status = 1;
   string error = 2;
-  Passenger data = 3;
+  Passenger passenger = 3;
 }
 
 message ListPassengersRequest {
@@ -57,7 +57,7 @@ message ListPassengersResponse {
   int64 total = 3;
   int64 offset = 4;
   int64 limit = 5;
-  repeated Passenger data = 6;
+  repeated Passenger passenger = 6;
 }
 
 message UpdatePassengerRequest {
@@ -70,7 +70,7 @@ message UpdatePassengerRequest {
 message UpdatePassengerResponse {
   int64 status = 1;
   string error = 2;
-  Passenger data = 3;
+  Passenger passenger = 3;
 }
 
 message UpdatePasswordRequest {
@@ -81,7 +81,7 @@ message UpdatePasswordRequest {
 message UpdatePasswordResponse {
   int64 status = 1;
   string error = 2;
-  Passenger data = 3;
+  Passenger passenger = 3;
 }
 
 message VerifyPassengerRequest {
@@ -91,7 +91,7 @@ message VerifyPassengerRequest {
 message VerifyPassengerResponse {
   int64 status = 1;
   string error = 2;
-  Passenger data = 3;
+  Passenger passenger = 3;
 }
 
 message DeletePassengerRequest {
@@ -101,4 +101,5 @@ message DeletePassengerRequest {
 message DeletePassengerResponse {
   int64 status = 1;
   string error = 2;
+  string message = 3;
 }

@@ -11,11 +11,6 @@ import (
 	"github.com/lntvan166/e2tech-passenger-svc/internal/utils"
 )
 
-type Server struct {
-	DB *db.Queries
-	pb.UnimplementedPassengerServiceServer
-}
-
 func (s *Server) CreatePassenger(context context.Context, req *pb.CreatePassengerRequest) (*pb.CreatePassengerResponse, error) {
 	_, err := s.DB.GetPassengerByPhone(context, req.Phone)
 	if err != sql.ErrNoRows {
@@ -58,8 +53,8 @@ func (s *Server) CreatePassenger(context context.Context, req *pb.CreatePassenge
 	}
 
 	return &pb.CreatePassengerResponse{
-		Status: http.StatusCreated,
-		Data:   dataRsp,
+		Status:    http.StatusCreated,
+		Passenger: dataRsp,
 	}, nil
 }
 
@@ -88,8 +83,8 @@ func (s *Server) GetPassengerByPhone(context context.Context, req *pb.GetPasseng
 	}
 
 	return &pb.GetPassengerByPhoneResponse{
-		Status: http.StatusOK,
-		Data:   dataRsp,
+		Status:    http.StatusOK,
+		Passenger: dataRsp,
 	}, nil
 }
 
@@ -119,8 +114,8 @@ func (s *Server) ListPassengers(context context.Context, req *pb.ListPassengersR
 	}
 
 	return &pb.ListPassengersResponse{
-		Status: http.StatusOK,
-		Data:   dataRsp,
+		Status:    http.StatusOK,
+		Passenger: dataRsp,
 	}, nil
 }
 
@@ -172,8 +167,8 @@ func (s *Server) UpdatePassenger(context context.Context, req *pb.UpdatePassenge
 	}
 
 	return &pb.UpdatePassengerResponse{
-		Status: http.StatusOK,
-		Data:   dataRsp,
+		Status:    http.StatusOK,
+		Passenger: dataRsp,
 	}, nil
 }
 
@@ -216,8 +211,8 @@ func (s *Server) UpdatePassword(context context.Context, req *pb.UpdatePasswordR
 	}
 
 	return &pb.UpdatePasswordResponse{
-		Status: http.StatusOK,
-		Data:   dataRsp,
+		Status:    http.StatusOK,
+		Passenger: dataRsp,
 	}, nil
 }
 
@@ -254,8 +249,8 @@ func (s *Server) VerifyPassenger(context context.Context, req *pb.VerifyPassenge
 	}
 
 	return &pb.VerifyPassengerResponse{
-		Status: http.StatusOK,
-		Data:   dataRsp,
+		Status:    http.StatusOK,
+		Passenger: dataRsp,
 	}, nil
 }
 
@@ -275,7 +270,7 @@ func (s *Server) DeletePassenger(context context.Context, req *pb.DeletePassenge
 		}, nil
 	}
 
-	err = s.DB.DeletePassenger(context, passenger.ID)
+	err = s.DB.DeletePassenger(context, passenger.Phone)
 	if err != nil {
 		return &pb.DeletePassengerResponse{
 			Status: http.StatusInternalServerError,

@@ -2,13 +2,15 @@
 INSERT INTO address (
   passenger_id,
   detail,
+  house_number,
+  street,
   ward,
   district,
   city,
   latitude,
   longitude
 ) VALUES (
-  $1, $2, $3, $4, $5, $6, $7
+  $1, $2, $3, $4, $5, $6, $7, $8, $9
 )
 RETURNING *;
 
@@ -16,9 +18,9 @@ RETURNING *;
 SELECT * FROM address
 WHERE id = $1 LIMIT 1;
 
--- name: GetAddressByPassengerID :many
+-- name: GetAddressByPassengerID :one
 SELECT * FROM address
-WHERE passenger_id = $1;
+WHERE passenger_id = $1 LIMIT 1;
 
 -- name: GetAddressForUpdate :one
 SELECT * FROM address
@@ -34,11 +36,13 @@ OFFSET $2;
 -- name: UpdateAddress :one
 UPDATE address
 SET detail = $2,
-  ward = $3,
-  district = $4,
-  city = $5,
-  latitude = $6,
-  longitude = $7
+  house_number = $3,
+  street = $4,
+  ward = $5,
+  district = $6,
+  city = $7,
+  latitude = $8,
+  longitude = $9
 WHERE id = $1
 RETURNING *;
 

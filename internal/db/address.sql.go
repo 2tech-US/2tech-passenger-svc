@@ -13,13 +13,15 @@ const createAddress = `-- name: CreateAddress :one
 INSERT INTO address (
   passenger_id,
   detail,
+  house_number,
+  street,
   ward,
   district,
   city,
   latitude,
   longitude
 ) VALUES (
-  $1, $2, $3, $4, $5, $6, $7
+  $1, $2, $3, $4, $5, $6, $7, $8, $9
 )
 RETURNING id, passenger_id, detail, house_number, street, ward, district, city, latitude, longitude
 `
@@ -27,6 +29,8 @@ RETURNING id, passenger_id, detail, house_number, street, ward, district, city, 
 type CreateAddressParams struct {
 	PassengerID int64   `json:"passenger_id"`
 	Detail      string  `json:"detail"`
+	HouseNumber string  `json:"house_number"`
+	Street      string  `json:"street"`
 	Ward        string  `json:"ward"`
 	District    string  `json:"district"`
 	City        string  `json:"city"`
@@ -38,6 +42,8 @@ func (q *Queries) CreateAddress(ctx context.Context, arg CreateAddressParams) (A
 	row := q.db.QueryRowContext(ctx, createAddress,
 		arg.PassengerID,
 		arg.Detail,
+		arg.HouseNumber,
+		arg.Street,
 		arg.Ward,
 		arg.District,
 		arg.City,
@@ -93,43 +99,27 @@ func (q *Queries) GetAddress(ctx context.Context, id int64) (Address, error) {
 	return i, err
 }
 
-const getAddressByPassengerID = `-- name: GetAddressByPassengerID :many
+const getAddressByPassengerID = `-- name: GetAddressByPassengerID :one
 SELECT id, passenger_id, detail, house_number, street, ward, district, city, latitude, longitude FROM address
-WHERE passenger_id = $1
+WHERE passenger_id = $1 LIMIT 1
 `
 
-func (q *Queries) GetAddressByPassengerID(ctx context.Context, passengerID int64) ([]Address, error) {
-	rows, err := q.db.QueryContext(ctx, getAddressByPassengerID, passengerID)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []Address
-	for rows.Next() {
-		var i Address
-		if err := rows.Scan(
-			&i.ID,
-			&i.PassengerID,
-			&i.Detail,
-			&i.HouseNumber,
-			&i.Street,
-			&i.Ward,
-			&i.District,
-			&i.City,
-			&i.Latitude,
-			&i.Longitude,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
+func (q *Queries) GetAddressByPassengerID(ctx context.Context, passengerID int64) (Address, error) {
+	row := q.db.QueryRowContext(ctx, getAddressByPassengerID, passengerID)
+	var i Address
+	err := row.Scan(
+		&i.ID,
+		&i.PassengerID,
+		&i.Detail,
+		&i.HouseNumber,
+		&i.Street,
+		&i.Ward,
+		&i.District,
+		&i.City,
+		&i.Latitude,
+		&i.Longitude,
+	)
+	return i, err
 }
 
 const getAddressForUpdate = `-- name: GetAddressForUpdate :one
@@ -205,29 +195,35 @@ func (q *Queries) ListAddresses(ctx context.Context, arg ListAddressesParams) ([
 const updateAddress = `-- name: UpdateAddress :one
 UPDATE address
 SET detail = $2,
-  ward = $3,
-  district = $4,
-  city = $5,
-  latitude = $6,
-  longitude = $7
+  house_number = $3,
+  street = $4,
+  ward = $5,
+  district = $6,
+  city = $7,
+  latitude = $8,
+  longitude = $9
 WHERE id = $1
 RETURNING id, passenger_id, detail, house_number, street, ward, district, city, latitude, longitude
 `
 
 type UpdateAddressParams struct {
-	ID        int64   `json:"id"`
-	Detail    string  `json:"detail"`
-	Ward      string  `json:"ward"`
-	District  string  `json:"district"`
-	City      string  `json:"city"`
-	Latitude  float64 `json:"latitude"`
-	Longitude float64 `json:"longitude"`
+	ID          int64   `json:"id"`
+	Detail      string  `json:"detail"`
+	HouseNumber string  `json:"house_number"`
+	Street      string  `json:"street"`
+	Ward        string  `json:"ward"`
+	District    string  `json:"district"`
+	City        string  `json:"city"`
+	Latitude    float64 `json:"latitude"`
+	Longitude   float64 `json:"longitude"`
 }
 
 func (q *Queries) UpdateAddress(ctx context.Context, arg UpdateAddressParams) (Address, error) {
 	row := q.db.QueryRowContext(ctx, updateAddress,
 		arg.ID,
 		arg.Detail,
+		arg.HouseNumber,
+		arg.Street,
 		arg.Ward,
 		arg.District,
 		arg.City,

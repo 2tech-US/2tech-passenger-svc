@@ -52,11 +52,11 @@ func (q *Queries) CreatePassenger(ctx context.Context, arg CreatePassengerParams
 
 const deletePassenger = `-- name: DeletePassenger :exec
 DELETE FROM passenger
-WHERE id = $1
+WHERE phone = $1
 `
 
-func (q *Queries) DeletePassenger(ctx context.Context, id int64) error {
-	_, err := q.db.ExecContext(ctx, deletePassenger, id)
+func (q *Queries) DeletePassenger(ctx context.Context, phone string) error {
+	_, err := q.db.ExecContext(ctx, deletePassenger, phone)
 	return err
 }
 

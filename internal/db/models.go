@@ -10,16 +10,16 @@ import (
 )
 
 type Address struct {
-	ID          int64          `json:"id"`
-	PassengerID int64          `json:"passenger_id"`
-	Detail      string         `json:"detail"`
-	HouseNumber sql.NullString `json:"house_number"`
-	Street      sql.NullString `json:"street"`
-	Ward        string         `json:"ward"`
-	District    string         `json:"district"`
-	City        string         `json:"city"`
-	Latitude    float64        `json:"latitude"`
-	Longitude   float64        `json:"longitude"`
+	ID          int64   `json:"id"`
+	PassengerID int64   `json:"passenger_id"`
+	Detail      string  `json:"detail"`
+	HouseNumber string  `json:"house_number"`
+	Street      string  `json:"street"`
+	Ward        string  `json:"ward"`
+	District    string  `json:"district"`
+	City        string  `json:"city"`
+	Latitude    float64 `json:"latitude"`
+	Longitude   float64 `json:"longitude"`
 }
 
 type Passenger struct {

@@ -1,6 +1,6 @@
 CREATE TABLE "passenger" (
   "id" bigserial PRIMARY KEY,
-  "phone" varchar NOT NULL,
+  "phone" varchar UNIQUE NOT NULL,
   "hashed_password" varchar NOT NULL,
   "name" varchar NOT NULL,
   "date_of_birth" date NOT NULL,
@@ -13,8 +13,8 @@ CREATE TABLE "address" (
   "id" bigserial PRIMARY KEY,
   "passenger_id" bigint NOT NULL,
   "detail" varchar UNIQUE NOT NULL,
-  "house_number" varchar,
-  "street" varchar,
+  "house_number" varchar NOT NULL DEFAULT "none",
+  "street" varchar NOT NULL DEFAULT "none",
   "ward" varchar NOT NULL,
   "district" varchar NOT NULL,
   "city" varchar NOT NULL,
