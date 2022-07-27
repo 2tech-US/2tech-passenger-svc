@@ -29,6 +29,11 @@ type PassengerServiceClient interface {
 	UpdatePassword(ctx context.Context, in *UpdatePasswordRequest, opts ...grpc.CallOption) (*UpdatePasswordResponse, error)
 	VerifyPassenger(ctx context.Context, in *VerifyPassengerRequest, opts ...grpc.CallOption) (*VerifyPassengerResponse, error)
 	DeletePassenger(ctx context.Context, in *DeletePassengerRequest, opts ...grpc.CallOption) (*DeletePassengerResponse, error)
+	CreateAddress(ctx context.Context, in *CreateAddressRequest, opts ...grpc.CallOption) (*CreateAddressResponse, error)
+	GetAddress(ctx context.Context, in *GetAddressRequest, opts ...grpc.CallOption) (*GetAddressResponse, error)
+	GetLocation(ctx context.Context, in *GetLocationRequest, opts ...grpc.CallOption) (*GetLocationResponse, error)
+	UpdateAddress(ctx context.Context, in *UpdateAddressRequest, opts ...grpc.CallOption) (*UpdateAddressResponse, error)
+	DeleteAddress(ctx context.Context, in *DeleteAddressRequest, opts ...grpc.CallOption) (*DeleteAddressResponse, error)
 }
 
 type passengerServiceClient struct {
@@ -102,6 +107,51 @@ func (c *passengerServiceClient) DeletePassenger(ctx context.Context, in *Delete
 	return out, nil
 }
 
+func (c *passengerServiceClient) CreateAddress(ctx context.Context, in *CreateAddressRequest, opts ...grpc.CallOption) (*CreateAddressResponse, error) {
+	out := new(CreateAddressResponse)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/CreateAddress", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *passengerServiceClient) GetAddress(ctx context.Context, in *GetAddressRequest, opts ...grpc.CallOption) (*GetAddressResponse, error) {
+	out := new(GetAddressResponse)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/GetAddress", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *passengerServiceClient) GetLocation(ctx context.Context, in *GetLocationRequest, opts ...grpc.CallOption) (*GetLocationResponse, error) {
+	out := new(GetLocationResponse)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/GetLocation", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *passengerServiceClient) UpdateAddress(ctx context.Context, in *UpdateAddressRequest, opts ...grpc.CallOption) (*UpdateAddressResponse, error) {
+	out := new(UpdateAddressResponse)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/UpdateAddress", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *passengerServiceClient) DeleteAddress(ctx context.Context, in *DeleteAddressRequest, opts ...grpc.CallOption) (*DeleteAddressResponse, error) {
+	out := new(DeleteAddressResponse)
+	err := c.cc.Invoke(ctx, "/passenger.PassengerService/DeleteAddress", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PassengerServiceServer is the server API for PassengerService service.
 // All implementations must embed UnimplementedPassengerServiceServer
 // for forward compatibility
@@ -113,6 +163,11 @@ type PassengerServiceServer interface {
 	UpdatePassword(context.Context, *UpdatePasswordRequest) (*UpdatePasswordResponse, error)
 	VerifyPassenger(context.Context, *VerifyPassengerRequest) (*VerifyPassengerResponse, error)
 	DeletePassenger(context.Context, *DeletePassengerRequest) (*DeletePassengerResponse, error)
+	CreateAddress(context.Context, *CreateAddressRequest) (*CreateAddressResponse, error)
+	GetAddress(context.Context, *GetAddressRequest) (*GetAddressResponse, error)
+	GetLocation(context.Context, *GetLocationRequest) (*GetLocationResponse, error)
+	UpdateAddress(context.Context, *UpdateAddressRequest) (*UpdateAddressResponse, error)
+	DeleteAddress(context.Context, *DeleteAddressRequest) (*DeleteAddressResponse, error)
 	mustEmbedUnimplementedPassengerServiceServer()
 }
 
@@ -140,6 +195,21 @@ func (UnimplementedPassengerServiceServer) VerifyPassenger(context.Context, *Ver
 }
 func (UnimplementedPassengerServiceServer) DeletePassenger(context.Context, *DeletePassengerRequest) (*DeletePassengerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePassenger not implemented")
+}
+func (UnimplementedPassengerServiceServer) CreateAddress(context.Context, *CreateAddressRequest) (*CreateAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAddress not implemented")
+}
+func (UnimplementedPassengerServiceServer) GetAddress(context.Context, *GetAddressRequest) (*GetAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAddress not implemented")
+}
+func (UnimplementedPassengerServiceServer) GetLocation(context.Context, *GetLocationRequest) (*GetLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLocation not implemented")
+}
+func (UnimplementedPassengerServiceServer) UpdateAddress(context.Context, *UpdateAddressRequest) (*UpdateAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAddress not implemented")
+}
+func (UnimplementedPassengerServiceServer) DeleteAddress(context.Context, *DeleteAddressRequest) (*DeleteAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAddress not implemented")
 }
 func (UnimplementedPassengerServiceServer) mustEmbedUnimplementedPassengerServiceServer() {}
 
@@ -280,6 +350,96 @@ func _PassengerService_DeletePassenger_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PassengerService_CreateAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PassengerServiceServer).CreateAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/passenger.PassengerService/CreateAddress",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PassengerServiceServer).CreateAddress(ctx, req.(*CreateAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PassengerService_GetAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PassengerServiceServer).GetAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/passenger.PassengerService/GetAddress",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PassengerServiceServer).GetAddress(ctx, req.(*GetAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PassengerService_GetLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLocationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PassengerServiceServer).GetLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/passenger.PassengerService/GetLocation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PassengerServiceServer).GetLocation(ctx, req.(*GetLocationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PassengerService_UpdateAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PassengerServiceServer).UpdateAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/passenger.PassengerService/UpdateAddress",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PassengerServiceServer).UpdateAddress(ctx, req.(*UpdateAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PassengerService_DeleteAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PassengerServiceServer).DeleteAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/passenger.PassengerService/DeleteAddress",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PassengerServiceServer).DeleteAddress(ctx, req.(*DeleteAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PassengerService_ServiceDesc is the grpc.ServiceDesc for PassengerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -314,6 +474,26 @@ var PassengerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeletePassenger",
 			Handler:    _PassengerService_DeletePassenger_Handler,
+		},
+		{
+			MethodName: "CreateAddress",
+			Handler:    _PassengerService_CreateAddress_Handler,
+		},
+		{
+			MethodName: "GetAddress",
+			Handler:    _PassengerService_GetAddress_Handler,
+		},
+		{
+			MethodName: "GetLocation",
+			Handler:    _PassengerService_GetLocation_Handler,
+		},
+		{
+			MethodName: "UpdateAddress",
+			Handler:    _PassengerService_UpdateAddress_Handler,
+		},
+		{
+			MethodName: "DeleteAddress",
+			Handler:    _PassengerService_DeleteAddress_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
