@@ -17,6 +17,7 @@ proto:
     --go-grpc_out=. --go-grpc_opt=paths=source_relative \
     internal/pb/*.proto
 up:
+	go mod tidy
 	make postgres
 	sleep 1
 	make createdb

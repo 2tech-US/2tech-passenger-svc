@@ -3,7 +3,7 @@ module github.com/lntvan166/e2tech-passenger-svc
 go 1.18
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/kelvins/geocoder v0.0.0-20200113010004-f579500e9e27
 	github.com/lib/pq v1.10.6
 	github.com/spf13/viper v1.12.0
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
@@ -15,7 +15,6 @@ require (
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
-	github.com/kelvins/geocoder v0.0.0-20200113010004-f579500e9e27 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
