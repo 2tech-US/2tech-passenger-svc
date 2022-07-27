@@ -16,6 +16,14 @@ proto:
 	protoc --go_out=. --go_opt=paths=source_relative \
     --go-grpc_out=. --go-grpc_opt=paths=source_relative \
     internal/pb/*.proto
+up:
+	make postgres
+	sleep 1
+	make createdb
+	make migrateup
+down:
+	docker stop e2tech
+	docker rm e2tech
 
 server:
 	go run cmd/server/main.go
