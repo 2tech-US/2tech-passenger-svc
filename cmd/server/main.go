@@ -27,7 +27,7 @@ func main() {
 		log.Fatalln("Failed to listing:", err)
 	}
 
-	fmt.Println("Auth Svc on", c.Port)
+	fmt.Println("Passenger Svc on", c.Port)
 
 	s := services.Server{
 		DB: DB,
