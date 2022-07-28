@@ -8,6 +8,6 @@ import (
 
 type Server struct {
 	DB     *db.Queries
-	config *config.Config
+	Config *config.Config
 	pb.UnimplementedPassengerServiceServer
 }

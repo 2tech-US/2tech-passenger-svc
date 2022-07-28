@@ -21,7 +21,6 @@ func (s *Server) CreatePassenger(context context.Context, req *pb.CreatePassenge
 	}
 
 	hashedPassword := utils.HashPassword(req.Password)
-	parsedDate, err := utils.ParseStringToDate(req.DateOfBirth)
 	if err != nil {
 		return &pb.CreatePassengerResponse{
 			Status: http.StatusBadRequest,
@@ -33,7 +32,6 @@ func (s *Server) CreatePassenger(context context.Context, req *pb.CreatePassenge
 		Phone:          req.Phone,
 		HashedPassword: hashedPassword,
 		Name:           req.Name,
-		DateOfBirth:    parsedDate,
 	}
 
 	passenger, err := s.DB.CreatePassenger(context, arg)
@@ -49,7 +47,7 @@ func (s *Server) CreatePassenger(context context.Context, req *pb.CreatePassenge
 		Phone:       passenger.Phone,
 		Name:        passenger.Name,
 		Verified:    passenger.Verified,
-		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth),
+		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
 	}
 
 	return &pb.CreatePassengerResponse{
@@ -79,7 +77,7 @@ func (s *Server) GetPassengerByPhone(context context.Context, req *pb.GetPasseng
 		Phone:       passenger.Phone,
 		Name:        passenger.Name,
 		Verified:    passenger.Verified,
-		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth),
+		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
 	}
 
 	return &pb.GetPassengerByPhoneResponse{
@@ -109,7 +107,7 @@ func (s *Server) ListPassengers(context context.Context, req *pb.ListPassengersR
 			Phone:       passenger.Phone,
 			Name:        passenger.Name,
 			Verified:    passenger.Verified,
-			DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth),
+			DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
 		}
 	}
 
@@ -136,6 +134,7 @@ func (s *Server) UpdatePassenger(context context.Context, req *pb.UpdatePassenge
 	}
 
 	strDate, err := utils.ParseStringToDate(req.DateOfBirth)
+	sqlDate := sql.NullTime{Time: strDate, Valid: true}
 	if err != nil {
 		return &pb.UpdatePassengerResponse{
 			Status: http.StatusBadRequest,
@@ -147,7 +146,7 @@ func (s *Server) UpdatePassenger(context context.Context, req *pb.UpdatePassenge
 		ID:          req.Id,
 		Phone:       req.Phone,
 		Name:        req.Name,
-		DateOfBirth: strDate,
+		DateOfBirth: sqlDate,
 	}
 
 	passenger, err = s.DB.UpdatePassenger(context, arg)
@@ -163,7 +162,7 @@ func (s *Server) UpdatePassenger(context context.Context, req *pb.UpdatePassenge
 		Phone:       passenger.Phone,
 		Name:        passenger.Name,
 		Verified:    passenger.Verified,
-		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth),
+		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
 	}
 
 	return &pb.UpdatePassengerResponse{
@@ -207,7 +206,7 @@ func (s *Server) UpdatePassword(context context.Context, req *pb.UpdatePasswordR
 		Phone:       passenger.Phone,
 		Name:        passenger.Name,
 		Verified:    passenger.Verified,
-		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth),
+		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
 	}
 
 	return &pb.UpdatePasswordResponse{
@@ -245,7 +244,7 @@ func (s *Server) VerifyPassenger(context context.Context, req *pb.VerifyPassenge
 		Phone:       passenger.Phone,
 		Name:        passenger.Name,
 		Verified:    passenger.Verified,
-		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth),
+		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
 	}
 
 	return &pb.VerifyPassengerResponse{

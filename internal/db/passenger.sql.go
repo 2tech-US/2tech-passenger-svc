@@ -7,35 +7,28 @@ package db
 
 import (
 	"context"
-	"time"
+	"database/sql"
 )
 
 const createPassenger = `-- name: CreatePassenger :one
 INSERT INTO passenger (
   phone,
   hashed_password,
-  name,
-  date_of_birth
+  name
 ) VALUES (
-  $1, $2, $3, $4
+  $1, $2, $3
 )
 RETURNING id, phone, hashed_password, name, date_of_birth, avatar_url, verified, created_at
 `
 
 type CreatePassengerParams struct {
-	Phone          string    `json:"phone"`
-	HashedPassword string    `json:"hashed_password"`
-	Name           string    `json:"name"`
-	DateOfBirth    time.Time `json:"date_of_birth"`
+	Phone          string `json:"phone"`
+	HashedPassword string `json:"hashed_password"`
+	Name           string `json:"name"`
 }
 
 func (q *Queries) CreatePassenger(ctx context.Context, arg CreatePassengerParams) (Passenger, error) {
-	row := q.db.QueryRowContext(ctx, createPassenger,
-		arg.Phone,
-		arg.HashedPassword,
-		arg.Name,
-		arg.DateOfBirth,
-	)
+	row := q.db.QueryRowContext(ctx, createPassenger, arg.Phone, arg.HashedPassword, arg.Name)
 	var i Passenger
 	err := row.Scan(
 		&i.ID,
@@ -179,10 +172,10 @@ RETURNING id, phone, hashed_password, name, date_of_birth, avatar_url, verified,
 `
 
 type UpdatePassengerParams struct {
-	ID          int64     `json:"id"`
-	Phone       string    `json:"phone"`
-	Name        string    `json:"name"`
-	DateOfBirth time.Time `json:"date_of_birth"`
+	ID          int64        `json:"id"`
+	Phone       string       `json:"phone"`
+	Name        string       `json:"name"`
+	DateOfBirth sql.NullTime `json:"date_of_birth"`
 }
 
 // pagination: offset: skip many rows

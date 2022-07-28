@@ -30,7 +30,8 @@ func main() {
 	fmt.Println("Passenger Svc on", c.Port)
 
 	s := services.Server{
-		DB: DB,
+		DB:     DB,
+		Config: &c,
 	}
 
 	grpcServer := grpc.NewServer()

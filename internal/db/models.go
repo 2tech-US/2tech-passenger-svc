@@ -27,7 +27,7 @@ type Passenger struct {
 	Phone          string         `json:"phone"`
 	HashedPassword string         `json:"hashed_password"`
 	Name           string         `json:"name"`
-	DateOfBirth    time.Time      `json:"date_of_birth"`
+	DateOfBirth    sql.NullTime   `json:"date_of_birth"`
 	AvatarUrl      sql.NullString `json:"avatar_url"`
 	Verified       bool           `json:"verified"`
 	CreatedAt      time.Time      `json:"created_at"`

@@ -2,10 +2,9 @@
 INSERT INTO passenger (
   phone,
   hashed_password,
-  name,
-  date_of_birth
+  name
 ) VALUES (
-  $1, $2, $3, $4
+  $1, $2, $3
 )
 RETURNING *;
 
