@@ -21,12 +21,6 @@ func (s *Server) CreatePassenger(context context.Context, req *pb.CreatePassenge
 	}
 
 	hashedPassword := utils.HashPassword(req.Password)
-	if err != nil {
-		return &pb.CreatePassengerResponse{
-			Status: http.StatusBadRequest,
-			Error:  "invalid date of birth",
-		}, nil
-	}
 
 	arg := db.CreatePassengerParams{
 		Phone:          req.Phone,
