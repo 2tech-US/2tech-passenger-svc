@@ -26,7 +26,7 @@ Authorization token: `passenger` , `admin`
 
 #### Get Passenger :
 ```
-GET /api/v1/passenger/
+GET /api/v1/passenger/admin/
 ```
 Authorization token: `admin`
 
