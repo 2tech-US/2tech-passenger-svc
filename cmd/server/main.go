@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 
+	"github.com/kelvins/geocoder"
 	"github.com/lntvan166/e2tech-passenger-svc/internal/config"
 	"github.com/lntvan166/e2tech-passenger-svc/internal/db"
 	"github.com/lntvan166/e2tech-passenger-svc/internal/pb"
@@ -20,6 +21,7 @@ func main() {
 	}
 
 	DB := db.Connect(c.DBUrl)
+	geocoder.ApiKey = c.GeocoderApiKey
 
 	lis, err := net.Listen("tcp", c.Port)
 
