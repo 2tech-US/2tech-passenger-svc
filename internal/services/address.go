@@ -115,7 +115,7 @@ func (s *Server) GetLocation(context context.Context, req *pb.GetLocationRequest
 
 func (s *Server) UpdateAddress(context context.Context, req *pb.UpdateAddressRequest) (*pb.UpdateAddressResponse, error) {
 	arg := db.UpdateAddressParams{
-		ID:          req.Id,
+		PassengerID: req.PassengerId,
 		Detail:      req.Detail,
 		HouseNumber: req.HouseNumber,
 		Street:      req.Street,
@@ -169,7 +169,7 @@ func (s *Server) UpdateAddress(context context.Context, req *pb.UpdateAddressReq
 }
 
 func (s *Server) DeleteAddress(context context.Context, req *pb.DeleteAddressRequest) (*pb.DeleteAddressResponse, error) {
-	err := s.DB.DeleteAddress(context, req.Id)
+	err := s.DB.DeleteAddress(context, req.PassengerId)
 	if err != nil {
 		return &pb.DeleteAddressResponse{
 			Status: http.StatusInternalServerError,

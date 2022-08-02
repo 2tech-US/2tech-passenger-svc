@@ -68,11 +68,11 @@ func (q *Queries) CreateAddress(ctx context.Context, arg CreateAddressParams) (A
 
 const deleteAddress = `-- name: DeleteAddress :exec
 DELETE FROM address
-WHERE id = $1
+WHERE passenger_id = $1
 `
 
-func (q *Queries) DeleteAddress(ctx context.Context, id int64) error {
-	_, err := q.db.ExecContext(ctx, deleteAddress, id)
+func (q *Queries) DeleteAddress(ctx context.Context, passengerID int64) error {
+	_, err := q.db.ExecContext(ctx, deleteAddress, passengerID)
 	return err
 }
 
@@ -202,12 +202,12 @@ SET detail = $2,
   city = $7,
   latitude = $8,
   longitude = $9
-WHERE id = $1
+WHERE passenger_id = $1
 RETURNING id, passenger_id, detail, house_number, street, ward, district, city, latitude, longitude
 `
 
 type UpdateAddressParams struct {
-	ID          int64   `json:"id"`
+	PassengerID int64   `json:"passenger_id"`
 	Detail      string  `json:"detail"`
 	HouseNumber string  `json:"house_number"`
 	Street      string  `json:"street"`
@@ -220,7 +220,7 @@ type UpdateAddressParams struct {
 
 func (q *Queries) UpdateAddress(ctx context.Context, arg UpdateAddressParams) (Address, error) {
 	row := q.db.QueryRowContext(ctx, updateAddress,
-		arg.ID,
+		arg.PassengerID,
 		arg.Detail,
 		arg.HouseNumber,
 		arg.Street,

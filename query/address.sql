@@ -43,9 +43,9 @@ SET detail = $2,
   city = $7,
   latitude = $8,
   longitude = $9
-WHERE id = $1
+WHERE passenger_id = $1
 RETURNING *;
 
 -- name: DeleteAddress :exec
 DELETE FROM address
-WHERE id = $1;
+WHERE passenger_id = $1;

@@ -169,7 +169,7 @@ message GetLocationResponse {
 }
 
 message UpdateAddressRequest {
-  int64 id = 1;
+  int64 passenger_id = 1;
   string detail = 2;
   string house_number = 3;
   string street = 4;
@@ -185,7 +185,7 @@ message UpdateAddressResponse {
 }
 
 message DeleteAddressRequest {
-  int64 id = 1;
+  int64 passenger_id = 1;
 }
 
 message DeleteAddressResponse {
