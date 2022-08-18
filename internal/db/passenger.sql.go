@@ -151,27 +151,20 @@ func (q *Queries) ListPassengers(ctx context.Context, arg ListPassengersParams) 
 
 const updatePassenger = `-- name: UpdatePassenger :one
 UPDATE passenger
-SET phone = $2,
-  name = $3,
-  date_of_birth = $4
-WHERE id = $1
+SET name = $2,
+  date_of_birth = $3
+WHERE phone = $1
 RETURNING id, phone, name, date_of_birth, avatar_url, created_at
 `
 
 type UpdatePassengerParams struct {
-	ID          int64        `json:"id"`
 	Phone       string       `json:"phone"`
 	Name        string       `json:"name"`
 	DateOfBirth sql.NullTime `json:"date_of_birth"`
 }
 
 func (q *Queries) UpdatePassenger(ctx context.Context, arg UpdatePassengerParams) (Passenger, error) {
-	row := q.db.QueryRowContext(ctx, updatePassenger,
-		arg.ID,
-		arg.Phone,
-		arg.Name,
-		arg.DateOfBirth,
-	)
+	row := q.db.QueryRowContext(ctx, updatePassenger, arg.Phone, arg.Name, arg.DateOfBirth)
 	var i Passenger
 	err := row.Scan(
 		&i.ID,

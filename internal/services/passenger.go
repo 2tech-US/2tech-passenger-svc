@@ -131,7 +131,6 @@ func (s *Server) UpdatePassenger(context context.Context, req *pb.UpdatePassenge
 	}
 
 	arg := db.UpdatePassengerParams{
-		ID:          req.Id,
 		Phone:       req.Phone,
 		Name:        req.Name,
 		DateOfBirth: sqlDate,

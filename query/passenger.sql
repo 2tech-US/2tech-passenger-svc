@@ -28,10 +28,9 @@ OFFSET $2;
 
 -- name: UpdatePassenger :one
 UPDATE passenger
-SET phone = $2,
-  name = $3,
-  date_of_birth = $4
-WHERE id = $1
+SET name = $2,
+  date_of_birth = $3
+WHERE phone = $1
 RETURNING *;
 
 -- name: DeletePassenger :exec
