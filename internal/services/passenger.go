@@ -22,6 +22,7 @@ func (s *Server) CreatePassenger(context context.Context, req *pb.CreatePassenge
 
 	arg := db.CreatePassengerParams{
 		Phone: req.Phone,
+		Name:  req.Name,
 	}
 
 	passenger, err := s.DB.CreatePassenger(context, arg)
