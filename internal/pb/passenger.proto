@@ -9,8 +9,6 @@ service PassengerService {
   rpc GetPassengerByPhone(GetPassengerByPhoneRequest) returns (GetPassengerByPhoneResponse) {}
   rpc ListPassengers(ListPassengersRequest) returns (ListPassengersResponse) {}
   rpc UpdatePassenger(UpdatePassengerRequest) returns (UpdatePassengerResponse) {}
-  rpc UpdatePassengerPassword(UpdatePassengerPasswordRequest) returns (UpdatePassengerPasswordResponse) {}
-  rpc VerifyPassenger(VerifyPassengerRequest) returns (VerifyPassengerResponse) {}
   rpc DeletePassenger(DeletePassengerRequest) returns (DeletePassengerResponse) {}
 
 }
@@ -25,8 +23,6 @@ message Passenger {
 
 message CreatePassengerRequest {
   string phone = 1;
-  string password = 2;
-  string name = 3;
 }
 
 message CreatePassengerResponse {
@@ -72,26 +68,6 @@ message UpdatePassengerResponse {
   Passenger passenger = 3;
 }
 
-message UpdatePassengerPasswordRequest {
-  string phone = 1;
-  string password = 2;
-}
-
-message UpdatePassengerPasswordResponse {
-  int64 status = 1;
-  string error = 2;
-  Passenger passenger = 3;
-}
-
-message VerifyPassengerRequest {
-  string phone = 1;
-}
-
-message VerifyPassengerResponse {
-  int64 status = 1;
-  string error = 2;
-  Passenger passenger = 3;
-}
 
 message DeletePassengerRequest {
   string phone = 1;

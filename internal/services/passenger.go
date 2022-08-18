@@ -20,12 +20,8 @@ func (s *Server) CreatePassenger(context context.Context, req *pb.CreatePassenge
 		}, nil
 	}
 
-	hashedPassword := utils.HashPassword(req.Password)
-
 	arg := db.CreatePassengerParams{
-		Phone:          req.Phone,
-		HashedPassword: hashedPassword,
-		Name:           req.Name,
+		Phone: req.Phone,
 	}
 
 	passenger, err := s.DB.CreatePassenger(context, arg)
@@ -40,7 +36,6 @@ func (s *Server) CreatePassenger(context context.Context, req *pb.CreatePassenge
 		Id:          passenger.ID,
 		Phone:       passenger.Phone,
 		Name:        passenger.Name,
-		Verified:    passenger.Verified,
 		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
 	}
 
@@ -70,7 +65,6 @@ func (s *Server) GetPassengerByPhone(context context.Context, req *pb.GetPasseng
 		Id:          passenger.ID,
 		Phone:       passenger.Phone,
 		Name:        passenger.Name,
-		Verified:    passenger.Verified,
 		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
 	}
 
@@ -100,7 +94,6 @@ func (s *Server) ListPassengers(context context.Context, req *pb.ListPassengersR
 			Id:          passenger.ID,
 			Phone:       passenger.Phone,
 			Name:        passenger.Name,
-			Verified:    passenger.Verified,
 			DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
 		}
 	}
@@ -155,93 +148,10 @@ func (s *Server) UpdatePassenger(context context.Context, req *pb.UpdatePassenge
 		Id:          passenger.ID,
 		Phone:       passenger.Phone,
 		Name:        passenger.Name,
-		Verified:    passenger.Verified,
 		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
 	}
 
 	return &pb.UpdatePassengerResponse{
-		Status:    http.StatusOK,
-		Passenger: dataRsp,
-	}, nil
-}
-
-func (s *Server) UpdatePassword(context context.Context, req *pb.UpdatePasswordRequest) (*pb.UpdatePasswordResponse, error) {
-	passenger, err := s.DB.GetPassengerByPhone(context, req.Phone)
-	if err != nil {
-		if err == sql.ErrNoRows {
-			return &pb.UpdatePasswordResponse{
-				Status: http.StatusBadRequest,
-				Error:  "user not found",
-			}, nil
-		}
-
-		return &pb.UpdatePasswordResponse{
-			Status: http.StatusInternalServerError,
-			Error:  "failed to get user",
-		}, nil
-	}
-
-	hashedPassword := utils.HashPassword(req.Password)
-	arg := db.UpdatePasswordParams{
-		ID:             passenger.ID,
-		HashedPassword: hashedPassword,
-	}
-
-	passenger, err = s.DB.UpdatePassword(context, arg)
-	if err != nil {
-		return &pb.UpdatePasswordResponse{
-			Status: http.StatusInternalServerError,
-			Error:  "failed to update password",
-		}, nil
-	}
-
-	dataRsp := &pb.Passenger{
-		Id:          passenger.ID,
-		Phone:       passenger.Phone,
-		Name:        passenger.Name,
-		Verified:    passenger.Verified,
-		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
-	}
-
-	return &pb.UpdatePasswordResponse{
-		Status:    http.StatusOK,
-		Passenger: dataRsp,
-	}, nil
-}
-
-func (s *Server) VerifyPassenger(context context.Context, req *pb.VerifyPassengerRequest) (*pb.VerifyPassengerResponse, error) {
-	passenger, err := s.DB.GetPassengerByPhone(context, req.Phone)
-	if err != nil {
-		if err == sql.ErrNoRows {
-			return &pb.VerifyPassengerResponse{
-				Status: http.StatusBadRequest,
-				Error:  "user not found",
-			}, nil
-		}
-
-		return &pb.VerifyPassengerResponse{
-			Status: http.StatusInternalServerError,
-			Error:  "failed to get user",
-		}, nil
-	}
-
-	passenger, err = s.DB.Verify(context, req.Phone)
-	if err != nil {
-		return &pb.VerifyPassengerResponse{
-			Status: http.StatusInternalServerError,
-			Error:  "failed to verify passenger",
-		}, nil
-	}
-
-	dataRsp := &pb.Passenger{
-		Id:          passenger.ID,
-		Phone:       passenger.Phone,
-		Name:        passenger.Name,
-		Verified:    passenger.Verified,
-		DateOfBirth: utils.ParsedDateToString(passenger.DateOfBirth.Time),
-	}
-
-	return &pb.VerifyPassengerResponse{
 		Status:    http.StatusOK,
 		Passenger: dataRsp,
 	}, nil

@@ -26,8 +26,6 @@ type PassengerServiceClient interface {
 	GetPassengerByPhone(ctx context.Context, in *GetPassengerByPhoneRequest, opts ...grpc.CallOption) (*GetPassengerByPhoneResponse, error)
 	ListPassengers(ctx context.Context, in *ListPassengersRequest, opts ...grpc.CallOption) (*ListPassengersResponse, error)
 	UpdatePassenger(ctx context.Context, in *UpdatePassengerRequest, opts ...grpc.CallOption) (*UpdatePassengerResponse, error)
-	UpdatePassword(ctx context.Context, in *UpdatePasswordRequest, opts ...grpc.CallOption) (*UpdatePasswordResponse, error)
-	VerifyPassenger(ctx context.Context, in *VerifyPassengerRequest, opts ...grpc.CallOption) (*VerifyPassengerResponse, error)
 	DeletePassenger(ctx context.Context, in *DeletePassengerRequest, opts ...grpc.CallOption) (*DeletePassengerResponse, error)
 }
 
@@ -75,24 +73,6 @@ func (c *passengerServiceClient) UpdatePassenger(ctx context.Context, in *Update
 	return out, nil
 }
 
-func (c *passengerServiceClient) UpdatePassword(ctx context.Context, in *UpdatePasswordRequest, opts ...grpc.CallOption) (*UpdatePasswordResponse, error) {
-	out := new(UpdatePasswordResponse)
-	err := c.cc.Invoke(ctx, "/passenger.PassengerService/UpdatePassword", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *passengerServiceClient) VerifyPassenger(ctx context.Context, in *VerifyPassengerRequest, opts ...grpc.CallOption) (*VerifyPassengerResponse, error) {
-	out := new(VerifyPassengerResponse)
-	err := c.cc.Invoke(ctx, "/passenger.PassengerService/VerifyPassenger", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *passengerServiceClient) DeletePassenger(ctx context.Context, in *DeletePassengerRequest, opts ...grpc.CallOption) (*DeletePassengerResponse, error) {
 	out := new(DeletePassengerResponse)
 	err := c.cc.Invoke(ctx, "/passenger.PassengerService/DeletePassenger", in, out, opts...)
@@ -110,8 +90,6 @@ type PassengerServiceServer interface {
 	GetPassengerByPhone(context.Context, *GetPassengerByPhoneRequest) (*GetPassengerByPhoneResponse, error)
 	ListPassengers(context.Context, *ListPassengersRequest) (*ListPassengersResponse, error)
 	UpdatePassenger(context.Context, *UpdatePassengerRequest) (*UpdatePassengerResponse, error)
-	UpdatePassword(context.Context, *UpdatePasswordRequest) (*UpdatePasswordResponse, error)
-	VerifyPassenger(context.Context, *VerifyPassengerRequest) (*VerifyPassengerResponse, error)
 	DeletePassenger(context.Context, *DeletePassengerRequest) (*DeletePassengerResponse, error)
 	mustEmbedUnimplementedPassengerServiceServer()
 }
@@ -131,12 +109,6 @@ func (UnimplementedPassengerServiceServer) ListPassengers(context.Context, *List
 }
 func (UnimplementedPassengerServiceServer) UpdatePassenger(context.Context, *UpdatePassengerRequest) (*UpdatePassengerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePassenger not implemented")
-}
-func (UnimplementedPassengerServiceServer) UpdatePassword(context.Context, *UpdatePasswordRequest) (*UpdatePasswordResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePassword not implemented")
-}
-func (UnimplementedPassengerServiceServer) VerifyPassenger(context.Context, *VerifyPassengerRequest) (*VerifyPassengerResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method VerifyPassenger not implemented")
 }
 func (UnimplementedPassengerServiceServer) DeletePassenger(context.Context, *DeletePassengerRequest) (*DeletePassengerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePassenger not implemented")
@@ -226,42 +198,6 @@ func _PassengerService_UpdatePassenger_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PassengerService_UpdatePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdatePasswordRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PassengerServiceServer).UpdatePassword(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/passenger.PassengerService/UpdatePassword",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PassengerServiceServer).UpdatePassword(ctx, req.(*UpdatePasswordRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PassengerService_VerifyPassenger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(VerifyPassengerRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PassengerServiceServer).VerifyPassenger(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/passenger.PassengerService/VerifyPassenger",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PassengerServiceServer).VerifyPassenger(ctx, req.(*VerifyPassengerRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _PassengerService_DeletePassenger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeletePassengerRequest)
 	if err := dec(in); err != nil {
@@ -302,14 +238,6 @@ var PassengerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdatePassenger",
 			Handler:    _PassengerService_UpdatePassenger_Handler,
-		},
-		{
-			MethodName: "UpdatePassword",
-			Handler:    _PassengerService_UpdatePassword_Handler,
-		},
-		{
-			MethodName: "VerifyPassenger",
-			Handler:    _PassengerService_VerifyPassenger_Handler,
 		},
 		{
 			MethodName: "DeletePassenger",
